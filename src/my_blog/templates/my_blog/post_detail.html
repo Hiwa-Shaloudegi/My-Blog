@@ -1,0 +1,28 @@
+{% extends 'my_blog/base.html' %}
+
+{% block title %} {{post.title}} {% endblock title %}
+
+
+
+{% block content %}
+
+    <h1>{{post.title}}</h1>
+    <hr>
+    <p>{{post.content}}</p>
+    <hr>
+
+
+    <h2>Comments</h2>
+    {% for comment in comments %}
+        {% if comment.active == True %}
+            <h3>{{comment.author.username}}:</h2>
+            <p>{{comment.content}}</p>
+            <hr>
+
+        {% else %}
+                No Comments Yet
+        {% endif %}
+
+    {% endfor %}
+
+{% endblock content %}

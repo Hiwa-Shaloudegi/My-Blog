@@ -1,27 +1,42 @@
 from django.db import models
-from django.db.models.base import Model
+from django.contrib.auth.models import User
 
 # Create your models here.
 
-
-class User(models.Model):
-    pass
-
-
-
-
 class Post(models.Model):
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='posts')
     title = models.CharField(max_length=50)
+    content = models.TextField(null=True) # content = Text Editor
     views = models.PositiveIntegerField(default=0)
     is_promote = models.BooleanField(default=False)
-    date = models.DateField()
-    # content = 
+    date = models.DateTimeField()
     # comments = models.ForeignKey(Comment, on_delete=models.CASCADE)
+
+    class Meta:
+        ordering = ('-date',)
+
+    
+    # def get_absolute_url(self):
+    #     return reverse("model_detail", args={"pk": self.pk})
+    
+
+    def __str__(self):
+        return self.title
+
 
 
 class Comment(models.Model):
-    # post = models.ForeignKey(Post, on_delete=models.CASCADE)
-    parent = models.ForeignKey('Comment')
-    child = models.ForeignKey('Comment')
-    is_valid = models.BooleanField(default=False)
+    # parent = models.ForeignKey('Comment', on_delete=models.CASCADE) 
+    # child = models.ForeignKey('Comment')
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments', null=True)
+    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='comments', null=True)
+    content = models.TextField(null=True)   # content = Text Editor
+    date = models.DateTimeField(null=True)
+    active = models.BooleanField(default=False)
+
+    class Meta:
+        ordering = ('-date',)
+
+
+    def __str__(self):
+        return f'Comment by {self.author.username} on {self.post}'

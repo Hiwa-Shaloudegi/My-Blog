@@ -8,5 +8,13 @@
 
 
 {% block content %}
-Test
+All Posts:
+<hr>
+{% for post in posts %}
+    <ul>
+        <li><a href="{% url 'post_detail' post.id%}">{{post.title}}</a></li>
+    </ul>
+    
+{% endfor %}
+
 {% endblock content %}
