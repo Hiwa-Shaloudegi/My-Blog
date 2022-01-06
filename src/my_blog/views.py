@@ -23,12 +23,15 @@ def index(request):
 
 def posts(request):
     posts = Post.objects.all().order_by("-date")
-    most_viewd_posts = posts.order_by("-views")
+    latest_posts = posts[:5]
+    most_viewd_posts = posts.order_by("-views")[:5]
+    most_viewd_postsssssss = posts.order_by("-views")
     # most_comment_posts = Post.comments.all().order_by()
     # Post.objects.all().filter(title__contains='')
 
     return render(request, 'my_blog/posts.html', context={
         "posts":posts,
+        'latest_posts':latest_posts,
         'most_viewd_posts':most_viewd_posts,
         
     })
