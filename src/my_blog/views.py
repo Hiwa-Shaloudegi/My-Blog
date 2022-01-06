@@ -1,3 +1,4 @@
+from django.db.models.aggregates import Count
 from django.shortcuts import get_object_or_404, render
 from django.core.paginator import Paginator
 
@@ -25,14 +26,16 @@ def posts(request):
     posts = Post.objects.all().order_by("-date")
     latest_posts = posts[:5]
     most_viewd_posts = posts.order_by("-views")[:5]
-    most_viewd_postsssssss = posts.order_by("-views")
-    # most_comment_posts = Post.comments.all().order_by()
+    all_most_viewd_posts = posts.order_by("-views")
+    all_most_commented_posts = Post.objects.annotate(num_comment=Count('comments')).order_by('-num_comment') 
     # Post.objects.all().filter(title__contains='')
 
     return render(request, 'my_blog/posts.html', context={
         "posts":posts,
         'latest_posts':latest_posts,
         'most_viewd_posts':most_viewd_posts,
+        'all_most_viewd_posts':all_most_viewd_posts,
+        'all_most_commented_posts':all_most_commented_posts,
         
     })
 
