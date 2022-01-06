@@ -9,7 +9,7 @@ def index(request):
     # paginator = Paginator(posts, 10)
     latest_posts = posts[:5]
     most_viewd_posts = posts.order_by("-views")[:5]
-    promoted_posts = Post.objects.all().filter(is_promote=True)[:3]   # ERROR: negative ...
+    promoted_posts = Post.objects.all().filter(is_promote=True)[:3]   
     
     return render(request, 'my_blog/index.html', context={
         'posts':posts,
