@@ -68,7 +68,7 @@
                                 <a class="nav-link" href="{% url 'register' %}">Register</a>
                             </li>                   
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Login</a>
+                                <a class="nav-link" href="{% url 'login' %}">Login</a>
                             </li>
 
                         </ul>
@@ -94,7 +94,7 @@
                             <div class="footer-text text-left">
                                 <a href="index.html"><img src="{% static 'my_blog/images/version/X-Blog.png' %}" alt="logo" class="img-fluid"></a>
                                 <p>
-                                    This is XBlog, a blog that you can <a href="#"><em>register</em></a> and share your thoughts with others and tell stories. <br> Join our community :)
+                                    This is XBlog, a blog that you can <a href="{% url 'register' %}"><em>register</em></a> and share your thoughts with others and tell stories. <br> Join our community :)
                                 </p>
   
                                 <hr class="invis">
@@ -125,8 +125,8 @@
                                 <ul>
                                     <li><a href="{% url 'index' %}">Home</a></li>
                                     <li><a href="{% url 'posts' %}">Posts</a></li>
-                                    <li><a href="#">Register</a></li>
-                                    <li><a href="#">Login</a></li>
+                                    <li><a href="{% url 'register' %}">Register</a></li>
+                                    <li><a href="{% url 'login' %}">Login</a></li>
                                     <li><a href="#">Github Page(source codes) </a></li>
                                 </ul>
                             </div><!-- end link-widget -->
