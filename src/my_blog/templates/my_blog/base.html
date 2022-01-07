@@ -22,6 +22,10 @@
     
         <!-- Design fonts -->
         <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet"> 
+
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
     
         <!-- Bootstrap core CSS -->
         <link href="{% static 'my_blog/css/bootstrap.css' %}" rel="stylesheet">
@@ -61,7 +65,7 @@
                                 <a class="nav-link" href="{% url 'posts' %}">Posts</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Register</a>
+                                <a class="nav-link" href="{% url 'register' %}">Register</a>
                             </li>                   
                             <li class="nav-item">
                                 <a class="nav-link" href="#">Login</a>
@@ -75,8 +79,10 @@
         </header><!-- end market-header -->
 
 
+        
 
-        {% block content %}{% endblock content %}
+        {% block content %}{% endblock content %} 
+
 
 
 

@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'my_blog',
+    'users',
     'tinymce',
     'django.contrib.admin',
     'django.contrib.auth',
