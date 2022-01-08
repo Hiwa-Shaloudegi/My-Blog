@@ -1,0 +1,82 @@
+{% extends 'my_blog/base.html' %}
+{% load static %}
+
+{% block title %}{{request.session.user}} Profile {% endblock title %}
+
+
+{% block content %}
+
+    <section class="section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+                    <div class="page-wrapper">
+
+                        <div class="blog-list clearfix">
+
+                            {% if author_posts %}
+
+                                <br>
+                                <div class="blog-top clearfix">
+                                    <h3 class="pull-left">My Posts</h3>
+                                </div><!-- end blog-top -->
+        
+                                {% for post in author_posts%}
+
+                                        <div class="blog-box row">
+                                            <div class="col-md-4">
+                                                <div class="post-media">
+                                                    <a href="{% url 'post_detail' post.slug%}" title="">
+                                                        <img src="{% static 'my_blog/images/'|add:post.image_name %}" alt="" class="img-fluid">
+                                                        <div class="hovereffect"></div>
+                                                    </a>
+                                                </div><!-- end media -->
+                                            </div><!-- end col -->
+
+                                        <div class="blog-meta big-meta col-md-8">
+                                                <h4><a href="{% url 'post_detail' post.slug%}">{{post.title}}</a></h4>
+                                                <p>{{post.summary}}</p>
+                                                <small><a href="tech-single.html" title="">{{post.date}}</a></small>
+                                                <small><a href="tech-author.html" title="">{{post.author}}</a></small>
+                                                <small><a href="tech-single.html" title=""><i class="fa fa-eye"></i> {{post.views}}</a></small>
+
+                                        </div><!-- end meta -->   
+                                    </div><!-- end blog-box -->
+
+                                    <hr class="invis">
+                                                                        
+                                {% endfor %}
+
+                            {% else %}
+                                <h1>No posts yet!</h1>
+                            {% endif %}
+
+                            
+                        </div><!-- end blog-list -->
+                    </div><!-- end page-wrapper -->
+
+                    <hr class="invis">
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <nav aria-label="Page navigation">
+                                <ul class="pagination justify-content-start">
+                                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="#">Next</a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div><!-- end col -->
+                    </div><!-- end row -->
+                </div><!-- end col --> 
+            </div>
+        </div>
+    </div>
+
+
+
+
+{% endblock content %}

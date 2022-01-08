@@ -69,11 +69,8 @@
                             {% if "user" in request.session %}
 
                                 <li class="nav-item">
-                                    <a class="nav-link" href="">My Profile</a>                  
+                                    <a class="nav-link" href="{% url 'profile' request.session.user%}">{{request.session.user}}</a>                  
                                 </li>  
-                                {% comment %} user.get_username {% endcomment %}
-                                {% comment %} {{user}} {% endcomment %}
-
 
                                 <li class="nav-item">
                                     <a class="nav-link" href="{% url 'logout' %}">Logout</a>

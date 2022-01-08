@@ -1,5 +1,6 @@
-from django.shortcuts import redirect, render
-from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.urls import reverse
+from django.shortcuts import get_object_or_404, redirect, render
+from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from django.contrib.auth import authenticate 
 
@@ -13,10 +14,10 @@ def register(request):
         form = UserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
-            request.session['user'] = user.id
+            request.session['user'] = user.username  # user.id
             # username = form.cleaned_data.get('username')
             messages.success(request, f"{user.username} Account Created")
-            return redirect("index")
+            return redirect('index')
     else:
         form = UserCreationForm()
 
@@ -32,24 +33,18 @@ def login(request):
         username = request.POST.get('username') 
         password = request.POST.get('password')
 
-        # form = AuthenticationForm(data=request.POST)
-        # if form.is_valid():
-        #     request.session['user'] = form.get_user().id
-        #     messages.info(request, f"You are loged in as {username}")  # {form.get_user().username}
-        #     return redirect('index') 
-        # else:
-        #     messages.warning(request, "Invalid username or password! please try again")
-
         user = authenticate(username=username, password=password)
-        # user = User.objects.all().filter(username=username)           # WTF!: empty list?? # , password__exact=password
+        # user = User.objects.all().filter(username=username)     # WTF!: empty list?? # , password__exact=password
 
         if user is not None:       # user.exists()
-            request.session['user'] = user.id                           # request.session['user'] = username
+            request.session['user'] = username                
             messages.info(request, f"You are loged in as {username}")
-            return redirect('index') # return redirect('profile')
+            return redirect('index')
+            # return redirect('profile', args=[username])
+            # return reverse('profile', args=[str(username)]) # return redirect('profile')
         else:
             messages.warning(request, "Invalid username or password! please try again")
-            return render(request, 'users/login.html')
+            return redirect('users/login.html')
 
     return render(request, 'users/login.html')
 
@@ -62,5 +57,28 @@ def logout(request):
 
     return redirect('index')
 
+
+
+def profile(request, username):
+    cuurent_user = request.session['user']
+    url_username = request.path.split('/') 
+    if url_username[-1] == cuurent_user:          
+        author = get_object_or_404(User, username=username)
+        author_posts = author.posts.all() 
+       
+        return render(request, 'users/profile.html', context={
+            'author':author,
+            'author_posts':author_posts,
+        })
+
+    else:
+        return redirect('login')
+
+    # author = get_object_or_404(User, username=username)
+    # author_posts = author.posts.all() 
     
+    # return render(request, 'users/profile.html', context={
+    #     'author':author,
+    #     'author_posts':author_posts,
+    # })
 
