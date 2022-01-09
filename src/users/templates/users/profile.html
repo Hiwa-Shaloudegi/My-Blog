@@ -12,6 +12,22 @@
                 <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
                     <div class="page-wrapper">
 
+
+                        <div>
+                            {% if messages %}
+        
+                                {% for message in messages %}
+                                    <div class="alert alert-{{message.tags}}">
+                                        {{message}}
+                                    </div>
+                                {% endfor %}
+                    
+                            {% endif %}
+                    
+                        </div>
+
+                        
+
                         <div class="blog-list clearfix">
 
                             {% if author_posts %}
@@ -51,11 +67,12 @@
                                 <h1>No posts yet!</h1>
                             {% endif %}
 
-                            
                         </div><!-- end blog-list -->
                     </div><!-- end page-wrapper -->
 
                     <hr class="invis">
+
+                    
 
                     <div class="row">
                         <div class="col-md-12">

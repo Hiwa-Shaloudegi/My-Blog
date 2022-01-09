@@ -144,9 +144,20 @@
                                 <ul>
                                     <li><a href="{% url 'index' %}">Home</a></li>
                                     <li><a href="{% url 'posts' %}">Posts</a></li>
-                                    <li><a href="{% url 'register' %}">Register</a></li>
-                                    <li><a href="{% url 'login' %}">Login</a></li>
+
+                                    {% if "user" in request.session %}
+
+                                        <li><a href="{% url 'logout' %}">logout</a></li>
+
+                                    {% else %}
+
+                                        <li><a href="{% url 'login' %}">Login</a></li>
+                                        <li><a href="{% url 'register' %}">Register</a></li>
+
+                                    {% endif %}
+
                                     <li><a href="#">Github Page(source codes) </a></li>
+                                    
                                 </ul>
                             </div><!-- end link-widget -->
                         </div><!-- end widget -->
