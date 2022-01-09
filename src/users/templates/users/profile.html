@@ -55,6 +55,12 @@
                                                 <small><a href="tech-single.html" title="">{{post.date}}</a></small>
                                                 <small><a href="tech-author.html" title="">{{post.author}}</a></small>
                                                 <small><a href="tech-single.html" title=""><i class="fa fa-eye"></i> {{post.views}}</a></small>
+                                                <br>
+                                                <small class="firstsmall"><a class="bg-green" href="#" title="">Edit</a></small>
+                                                <small class="firstsmall"><a class="bg-red" href="{% url 'delete_post' post.id %}" title="">Delete</a></small>
+
+
+
 
                                         </div><!-- end meta -->   
                                     </div><!-- end blog-box -->

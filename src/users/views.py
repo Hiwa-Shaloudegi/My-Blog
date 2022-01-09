@@ -3,7 +3,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from django.contrib.auth import authenticate 
 
-from my_blog.models import User
+from my_blog.models import Post, User
 
 # Create your views here.
 
@@ -45,7 +45,7 @@ def login(request):
 
         else:
             messages.warning(request, "Invalid username or password! please try again")
-            return redirect('users/login.html')
+            return redirect('login')
 
     return render(request, 'users/login.html')
 
@@ -73,3 +73,21 @@ def profile(request, username):
 
     else:
         return redirect('login')
+
+
+
+
+
+
+def delete_post(request, id):
+    post = get_object_or_404(Post, pk=id)
+    user = post.author
+
+    if request.method == 'POST':    
+        post.delete()
+        return redirect('profile', username=user.username)
+
+    return render(request, 'users/delete_post.html', context={
+        'post':post,
+        'user':user.username
+    })

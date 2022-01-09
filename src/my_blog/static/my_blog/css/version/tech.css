@@ -330,3 +330,70 @@ a:focus {
         display: block;
     }
 }
+
+
+/* ###  added by me ### */
+
+/* red */
+
+.blog-grid-system .color-red {
+    display: block;
+    margin-top: 1rem;
+}
+
+.blog-grid-system .color-red a {
+    color: #ffffff !important;
+    font-size: 13px;
+    padding: 0 0.7rem;
+    border-radius: 3px;
+}
+
+
+.blog-meta .bg-red {
+    color: #ffffff !important;
+    padding: 0 0.8rem;
+    border-radius: 3px;
+}
+
+
+.bg-red {
+    background-color: #b32209 !important;
+}
+
+.page-title .bg-red,
+.masonry-box:hover .blog-meta span.bg-red,
+.color-red a {
+    background-color: #b32209 !important;
+}
+
+/* green */
+
+.blog-grid-system .color-green {
+    display: block;
+    margin-top: 1rem;
+}
+
+.blog-grid-system .color-green a {
+    color: #ffffff !important;
+    font-size: 13px;
+    padding: 0 0.7rem;
+    border-radius: 3px;
+}
+
+
+.blog-meta .bg-green {
+    color: #ffffff !important;
+    padding: 0 0.8rem;
+    border-radius: 3px;
+}
+
+
+.bg-green {
+    background-color: #098d45 !important;
+}
+
+.page-title .bg-green,
+.masonry-box:hover .blog-meta span.bg-green,
+.color-green a {
+    background-color: #098d45 !important;
+}

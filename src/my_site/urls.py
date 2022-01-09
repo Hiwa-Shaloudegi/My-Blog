@@ -25,6 +25,7 @@ urlpatterns = [
     path('login/', user_view.login, name='login'),
     path('logout/', user_view.logout, name='logout'),
     path('profile/<str:username>', user_view.profile, name='profile'),
+    path('delete_post/<int:id>', user_view.delete_post, name='delete_post'),
     path('', include("my_blog.urls")),
     path('tinymce/', include('tinymce.urls')),
     
