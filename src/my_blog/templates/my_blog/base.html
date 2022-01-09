@@ -69,7 +69,11 @@
                             {% if "user" in request.session %}
 
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{% url 'profile' request.session.user%}">{{request.session.user}}</a>                  
+                                    <a class="nav-link" href="{% url 'profile' request.session.user %}">{{request.session.user}}</a>                  
+                                </li>  
+
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'add_post' %}">Add Post</a>                  
                                 </li>  
 
                                 <li class="nav-item">

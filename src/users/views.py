@@ -2,6 +2,8 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from django.contrib.auth import authenticate 
+from django.utils.text import slugify
+
 
 from my_blog.models import Post, User
 
@@ -64,7 +66,7 @@ def profile(request, username):
 
     if url_username[-1] == cuurent_user:          
         author = get_object_or_404(User, username=username)
-        author_posts = author.posts.all() 
+        author_posts = author.posts.all().order_by('-date') 
        
         return render(request, 'users/profile.html', context={
             'author':author,
@@ -79,11 +81,33 @@ def profile(request, username):
 
 
 
+def add_post(request):
+    if request.method == "POST":
+
+        title = request.POST.get('title')
+        summary = request.POST.get('summary') 
+        content = request.POST.get('content')
+        author_username = request.session['user']
+        author = get_object_or_404(User, username=author_username)
+        slug = slugify(title)
+
+        post = Post(title=title, summary=summary, content=content, author=author, image_name='default.png', slug=slug)
+        post.save()
+
+        return redirect('profile', username=author)
+
+
+    return render(request, 'users/add_post.html', context={
+
+    })
+
+
+
 def delete_post(request, id):
     post = get_object_or_404(Post, pk=id)
     user = post.author
 
-    if request.method == 'POST':    
+    if request.method == "POST":    
         post.delete()
         return redirect('profile', username=user.username)
 

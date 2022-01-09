@@ -73,9 +73,9 @@
                                     <div class="blog-meta big-meta col-md-8">
                                             <h4><a href="{% url 'post_detail' post.slug%}">{{post.title}}</a></h4>
                                             <p>{{post.summary}}</p>
-                                            <small><a href="tech-single.html" title="">{{post.date}}</a></small>
-                                            <small><a href="tech-author.html" title="">{{post.author}}</a></small>
-                                            <small><a href="tech-single.html" title=""><i class="fa fa-eye"></i> {{post.views}}</a></small>
+                                            <small>{{post.date}}</small>
+                                            <small>{{post.author}}</small>
+                                            <small><i class="fa fa-eye"></i> {{post.views}} </small>
 
                                     </div><!-- end meta -->   
                                 </div><!-- end blog-box -->
