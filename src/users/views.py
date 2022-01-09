@@ -82,6 +82,9 @@ def profile(request, username):
 
 
 def add_post(request):
+    if 'user' not in request.session:  # if a user is Not logged in and opens add_post page(by typing url /add_post), it will be redirected to the index page
+        return redirect('index')
+
     if request.method == "POST":
 
         title = request.POST.get('title')
