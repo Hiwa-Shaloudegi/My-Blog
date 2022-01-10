@@ -27,6 +27,7 @@ urlpatterns = [
     path('profile/<str:username>', user_view.profile, name='profile'),
     path('delete_post/<int:id>', user_view.delete_post, name='delete_post'),
     path('add_post/', user_view.add_post, name='add_post'),
+    path('edit_post/<int:id>', user_view.edit_post, name='edit_post'),
     path('', include("my_blog.urls")),
     path('tinymce/', include('tinymce.urls')),
     

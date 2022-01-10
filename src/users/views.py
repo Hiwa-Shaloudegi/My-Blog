@@ -97,6 +97,7 @@ def add_post(request):
         post = Post(title=title, summary=summary, content=content, author=author, image_name='default.png', slug=slug)
         post.save()
 
+        messages.success(request, "Post Added")
         return redirect('profile', username=author)
 
 
@@ -109,12 +110,13 @@ def add_post(request):
 def delete_post(request, id):
     post = get_object_or_404(Post, pk=id)
     user = post.author
-    
+
     if 'user' not in request.session or request.session['user'] != user.username:  # if a user is Not logged in and opens delete_post page(by typing url /delete_post/id), it will be redirected to the index page
         return redirect('index')
 
     if request.method == "POST":    
         post.delete()
+        messages.success(request, "Post Deleted")
         return redirect('profile', username=user.username)
 
     return render(request, 'users/delete_post.html', context={
@@ -126,4 +128,32 @@ def delete_post(request, id):
 
 
 def edit_post(request, id):
-    pass
+    post = get_object_or_404(Post, pk=id)
+    user = post.author
+
+    if 'user' not in request.session or request.session['user'] != user.username:  # if a user is Not logged in and opens edit_post page(by typing url /edit_post/id), it will be redirected to the index page
+        return redirect('index')
+    
+    if request.method == "POST":
+
+        title = request.POST.get('title')
+        summary = request.POST.get('summary') 
+        content = request.POST.get('content')
+        author_username = request.session['user']
+        author = get_object_or_404(User, username=author_username)
+        slug = slugify(title)
+
+        post.title = title
+        post.summary = summary
+        post.content = content
+        post.author = author
+        post.slug = slug
+        
+        post.save()
+
+        messages.success(request, "Post Edited")
+        return redirect('profile', username=author)
+
+    return render(request, 'users/edit_post.html', context={
+        'post':post,
+    })

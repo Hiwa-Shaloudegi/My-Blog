@@ -56,7 +56,7 @@
                                                 <small>{{post.author}}</small>
                                                 <small><i class="fa fa-eye"></i> {{post.views}}</small>
                                                 <br>
-                                                <small class="firstsmall"><a class="bg-green" href="#" title="">Edit</a></small>
+                                                <small class="firstsmall"><a class="bg-green" href="{% url 'edit_post' post.id%}" title="">Edit</a></small>
                                                 <small class="firstsmall"><a class="bg-red" href="{% url 'delete_post' post.id %}" title="">Delete</a></small>
 
 
