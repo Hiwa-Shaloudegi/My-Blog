@@ -109,6 +109,9 @@ def add_post(request):
 def delete_post(request, id):
     post = get_object_or_404(Post, pk=id)
     user = post.author
+    
+    if 'user' not in request.session or request.session['user'] != user.username:  # if a user is Not logged in and opens delete_post page(by typing url /delete_post/id), it will be redirected to the index page
+        return redirect('index')
 
     if request.method == "POST":    
         post.delete()
@@ -118,3 +121,9 @@ def delete_post(request, id):
         'post':post,
         'user':user.username
     })
+
+
+
+
+def edit_post(request, id):
+    pass
