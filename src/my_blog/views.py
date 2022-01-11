@@ -1,5 +1,6 @@
 from django.db.models.aggregates import Count
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, redirect
+from django.contrib import messages
 from django.core.paginator import Paginator
 
 from .models import User, Post, Comment
@@ -44,7 +45,20 @@ def posts(request):
 
 def post_detail(request, slug):
     post = get_object_or_404(Post, slug=slug)
-    comments = post.comments.filter(active=True)
+    comments = post.comments.filter(active=True).order_by("-date")
+
+    if request.method == "POST":
+        author_username = request.session['user']
+        author = get_object_or_404(User, username=author_username)
+
+        content = request.POST.get('content')
+
+        comment = Comment(content=content, author=author, post=post)
+        comment.save()
+        messages.success(request, "Comment Added")
+
+        return redirect('post_detail', slug=slug) 
+
 
     return render(request, 'my_blog/post_detail.html', context={
         'post':post,

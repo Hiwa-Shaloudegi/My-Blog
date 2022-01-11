@@ -5,7 +5,7 @@ from django.contrib.auth import authenticate
 from django.utils.text import slugify
 
 
-from my_blog.models import Post, User
+from my_blog.models import Comment, Post, User
 
 # Create your views here.
 
@@ -157,3 +157,5 @@ def edit_post(request, id):
     return render(request, 'users/edit_post.html', context={
         'post':post,
     })
+
+

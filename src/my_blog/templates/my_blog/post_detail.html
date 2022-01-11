@@ -4,12 +4,31 @@
 
 {% block content %}
 
+
+
+
+
+
     <section class="section single-wrapper">
         <div class="container">
             <div class="row">
                 <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
                     <div class="page-wrapper">
                         <div class="blog-title-area text-center">
+
+                            <div>
+                                {% if messages %}
+                        
+                                    {% for message in messages %}
+                                        <div class="alert alert-{{message.tags}}">
+                                            {{message}}
+                                        </div>
+                                    {% endfor %}
+                        
+                                {% endif %}
+                        
+                            </div>
+                        
         
                             <h3>{{post.title}}</h3>
 
@@ -73,12 +92,21 @@
                             <h4 class="small-title">Leave a Comment</h4>
                             <div class="row">
                                 <div class="col-lg-12">
-                                    <form class="form-wrapper">
-                                        <input type="text" class="form-control" placeholder="Your name">
-                                        <input type="text" class="form-control" placeholder="Email address">
-                                        <textarea class="form-control" placeholder="Your comment"></textarea>
-                                        <button type="submit" class="btn btn-primary">Submit Comment</button>
-                                    </form>
+
+                                    {% if "user" in request.session %}
+                                    
+                                        <form class="form-wrapper" method="POST">
+                                            {% csrf_token %}
+
+                                            <textarea class="form-control" placeholder="Your comment" name="content"></textarea>
+                                            <button type="submit" class="btn btn-primary">Submit Comment</button>
+
+                                        </form>
+
+                                    {% else %}
+                                        <h3>First <i><a class="ml-2" href="{% url 'login' %}">Login</a></i> to leave comments </h3>
+                                    {% endif %}
+
                                 </div>
                             </div>
                         </div>
