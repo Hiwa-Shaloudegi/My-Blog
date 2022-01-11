@@ -27,8 +27,13 @@
                 <form method="POST" class="form-wrapper">
                     {% csrf_token %}
                     <br>
+                    <h5>Title</h5>
                     <input type="text" class="form-control" placeholder="Title" name="title" value="{{post.title}}">
+
+                    <h5>Summary</h5>
                     <textarea class="form-control" placeholder="Summary" name="summary"> {{post.summary}} </textarea>
+
+                    <h5>Content</h5>
                     <textarea class="form-control" placeholder="Content" name="content"> {{post.content}} </textarea>
                     <button type="submit" class="btn btn-primary">Edit</button>
 
