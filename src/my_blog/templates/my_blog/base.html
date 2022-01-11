@@ -64,12 +64,35 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{% url 'posts' %}">Posts</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{% url 'register' %}">Register</a>
-                            </li>                   
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">Login</a>
-                            </li>
+                            
+                            
+                            {% if "user" in request.session %}
+
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'profile' request.session.user %}">{{request.session.user}}</a>                  
+                                </li>  
+
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'add_post' %}">Add Post</a>                  
+                                </li>  
+
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                                </li>
+            
+                            {% else %}
+                            
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'login' %}">Login</a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'register' %}">Register</a>
+                                </li>                   
+
+
+                            {% endif %}
+
 
                         </ul>
 
@@ -94,7 +117,7 @@
                             <div class="footer-text text-left">
                                 <a href="index.html"><img src="{% static 'my_blog/images/version/X-Blog.png' %}" alt="logo" class="img-fluid"></a>
                                 <p>
-                                    This is XBlog, a blog that you can <a href="#"><em>register</em></a> and share your thoughts with others and tell stories. <br> Join our community :)
+                                    This is XBlog, a blog that you can <a href="{% url 'register' %}"><em>register</em></a> and share your thoughts with others and tell stories. <br> Join our community :)
                                 </p>
   
                                 <hr class="invis">
@@ -125,9 +148,20 @@
                                 <ul>
                                     <li><a href="{% url 'index' %}">Home</a></li>
                                     <li><a href="{% url 'posts' %}">Posts</a></li>
-                                    <li><a href="#">Register</a></li>
-                                    <li><a href="#">Login</a></li>
+
+                                    {% if "user" in request.session %}
+
+                                        <li><a href="{% url 'logout' %}">logout</a></li>
+
+                                    {% else %}
+
+                                        <li><a href="{% url 'login' %}">Login</a></li>
+                                        <li><a href="{% url 'register' %}">Register</a></li>
+
+                                    {% endif %}
+
                                     <li><a href="#">Github Page(source codes) </a></li>
+                                    
                                 </ul>
                             </div><!-- end link-widget -->
                         </div><!-- end widget -->

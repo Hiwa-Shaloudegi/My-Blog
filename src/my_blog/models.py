@@ -11,7 +11,7 @@ class Post(models.Model):
     views = models.PositiveIntegerField(default=0)
     is_promote = models.BooleanField(default=False)
     date = models.DateTimeField(auto_now=True)
-    image_name = models.CharField(max_length=64, null=True)
+    image_name = models.CharField(max_length=64, null=True, default='default.png')
     slug = models.SlugField(unique=True, db_index=True, null=True)
 
     def __str__(self):
