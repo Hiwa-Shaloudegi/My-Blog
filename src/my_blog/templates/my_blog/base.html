@@ -69,11 +69,12 @@
                             {% if "user" in request.session %}
 
                                 <li class="nav-item">
-                                    <a class="nav-link" href="">My Profile</a>                  
+                                    <a class="nav-link" href="{% url 'profile' request.session.user %}">{{request.session.user}}</a>                  
                                 </li>  
-                                {% comment %} user.get_username {% endcomment %}
-                                {% comment %} {{user}} {% endcomment %}
 
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'add_post' %}">Add Post</a>                  
+                                </li>  
 
                                 <li class="nav-item">
                                     <a class="nav-link" href="{% url 'logout' %}">Logout</a>
@@ -147,9 +148,20 @@
                                 <ul>
                                     <li><a href="{% url 'index' %}">Home</a></li>
                                     <li><a href="{% url 'posts' %}">Posts</a></li>
-                                    <li><a href="{% url 'register' %}">Register</a></li>
-                                    <li><a href="{% url 'login' %}">Login</a></li>
+
+                                    {% if "user" in request.session %}
+
+                                        <li><a href="{% url 'logout' %}">logout</a></li>
+
+                                    {% else %}
+
+                                        <li><a href="{% url 'login' %}">Login</a></li>
+                                        <li><a href="{% url 'register' %}">Register</a></li>
+
+                                    {% endif %}
+
                                     <li><a href="#">Github Page(source codes) </a></li>
+                                    
                                 </ul>
                             </div><!-- end link-widget -->
                         </div><!-- end widget -->

@@ -1,0 +1,43 @@
+{% extends 'my_blog/base.html' %}
+{% load static %}
+
+{% block title %}Add Post{% endblock title %}
+
+
+{% block content %}
+
+    <div>
+        {% if messages %}
+
+            {% for message in messages %}
+                <div class="alert alert-{{message.tags}}">
+                    {{message}}
+                </div>
+            {% endfor %}
+
+        {% endif %}
+
+    </div>
+
+
+    <section class="section wb">
+        <div class="container">
+            <div class="col-lg-7">
+
+                <form method="POST" class="form-wrapper">
+                    {% csrf_token %}
+                    <br>
+                    <input type="text" class="form-control" placeholder="Title" name="title">
+                    <textarea class="form-control" placeholder="Summary" name="summary"></textarea>
+                    <textarea class="form-control" placeholder="Content" name="content"></textarea>
+                    <button type="submit" class="btn btn-primary">Add</button>
+
+                </form>
+            </div>
+        
+        </div>
+
+    </section>
+
+
+{% endblock content %}
