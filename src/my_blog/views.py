@@ -54,6 +54,7 @@ def post_detail(request, slug):
         content = request.POST.get('content')
 
         comment = Comment(content=content, author=author, post=post)
+        comment.parent = comment
         comment.save()
         messages.success(request, "Comment Added")
 
