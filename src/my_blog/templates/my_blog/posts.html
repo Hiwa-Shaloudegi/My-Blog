@@ -5,11 +5,11 @@
 {% block content %}
 
   <div class="page-title lb single-wrapper">
-
-
     <div class="container">
         <div class="row">
-            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12 hidden-xs-down hidden-sm-down">
+
+                {% comment %} Form for Search {% endcomment %}
 
                 <form action="{% url 'posts' %}" method="POST">
                     {% csrf_token %}
@@ -17,31 +17,63 @@
                     <input type="submit" value="Submit" name="btnform1">
                 </form>
 
-            </div><!-- end col -->
+                <hr>
 
-            <div class="col-lg-4 col-md-4 col-sm-12 hidden-xs-down hidden-sm-down">
-                {% comment %} <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item"><a href="#">Blog</a></li>
-                    <li class="breadcrumb-item active">Reviews</li>
-                </ol> {% endcomment %}
+                {% comment %} Form for View Search {% endcomment %}
+
+                <form action="{% url 'posts' %}" method="POST"> 
+                    {% csrf_token %}
+
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">Minimum View:
+                            <input type="text" placeholder="0" name="view_min">
+                            <br>
+                            <br>
+                        </li>
+
+                        <li class="breadcrumb-item">
+                            Maximum View:
+                            <input type="text" placeholder="100000" name="view_max">
+                            <br>
+                            <br>
+                        </li>
+
+                        <li class="breadcrumb-item active">
+                            <input type="submit" value="Search" name="btnform2">
+                        </li>
+                    </ol>
+
+                </form>
+
+                <hr>
+
+                {% comment %} Form for Date Search {% endcomment %}
 
                 <form action="{% url 'posts' %}" method="POST">
                     {% csrf_token %}
-  
-                    Publish date minimum
-                    <input class="form-control" type="date" name="date_min">
-                    <br>
-                
-                    Publish date maximum
-                    <input  class="form-control" type="date" name="date_max">
-                    <br>
-                
-                    <input class="form-control" type="submit" value="Search" name="btnform2">
-                
-                </form>
 
-            </div><!-- end col -->                    
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            Publish Date Minimum:
+                            <input type="date" name="date_min">
+                            <br>
+                        </li>
+
+                        <li class="breadcrumb-item">
+                            Publish Date Maximum:
+                            <input type="date" name="date_max">
+                            <br>
+                        </li>
+                        
+                        <li class="breadcrumb-item">
+                            <input type="submit" value="Search" name="btnform3">
+                        </li>
+                      
+                    </ol>
+                   
+                </form>
+  
+            </div><!-- end col -->
         </div><!-- end row -->
     </div><!-- end container -->
   </div><!-- end page-title --> 
@@ -115,6 +147,37 @@
                                     <hr class="invis">
 
                             {% endfor %}
+
+
+                        {% elif filtered_views_posts %}
+
+                            <h1>Searched for views between {{view_min}} to {{view_max}}</h1>
+                        
+                            {% for post in filtered_views_posts%}
+
+                            <div class="blog-box row">
+                                <div class="col-md-4">
+                                    <div class="post-media">
+                                        <a href="{% url 'post_detail' post.slug%}" title="">
+                                            <img src="{% static 'my_blog/images/'|add:post.image_name %}" alt="" class="img-fluid">
+                                            <div class="hovereffect"></div>
+                                        </a>
+                                    </div><!-- end media -->
+                                </div><!-- end col -->
+
+                                <div class="blog-meta big-meta col-md-8">
+                                    <h4><a href="{% url 'post_detail' post.slug%}" title="">{{post.title}}</a></h4>
+                                    <p>{{post.summary}}</p>
+                                    <small>{{post.date}}</small>
+                                    <small>{{post.author}}</small>
+                                    <small><i class="fa fa-eye"></i> {{post.views}}</small>
+                                </div><!-- end meta -->
+                                </div><!-- end blog-box -->
+
+                                <hr class="invis">
+
+                        {% endfor %}
+
 
 
                         {% else %}

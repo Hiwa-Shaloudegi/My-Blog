@@ -50,6 +50,23 @@ def posts(request):
 
 
     if request.method == "POST" and 'btnform2' in request.POST: 
+        view_min = request.POST.get('view_min') 
+        view_max = request.POST.get('view_max')
+
+        filtered_views_posts = Post.objects.filter(views__gte=view_min)
+        filtered_views_posts = filtered_views_posts.filter(views__lte=view_max)
+
+        return render(request, 'my_blog/posts.html', context={
+            'filtered_views_posts':filtered_views_posts,
+            'view_min':view_min,
+            'view_max':view_max,
+            'posts':posts,
+            'latest_posts':latest_posts,
+        })
+
+
+
+    if request.method == "POST" and 'btnform3' in request.POST: 
         date_min = request.POST.get('date_min') 
         date_max = request.POST.get('date_max')
 
@@ -64,7 +81,7 @@ def posts(request):
             'latest_posts':latest_posts,
         })
 
-
+    
     return render(request, 'my_blog/posts.html', context={
         "posts":posts,
         'latest_posts':latest_posts,
