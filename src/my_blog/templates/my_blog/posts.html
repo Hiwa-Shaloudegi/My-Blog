@@ -7,8 +7,6 @@
   <div class="page-title lb single-wrapper">
 
 
-
-     
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
@@ -16,20 +14,40 @@
                 <form action="{% url 'posts' %}" method="POST">
                     {% csrf_token %}
                     <input type="text" placeholder="Search" name="search">
-                    <input type="submit" value="Submit">
+                    <input type="submit" value="Submit" name="btnform1">
                 </form>
 
             </div><!-- end col -->
+
             <div class="col-lg-4 col-md-4 col-sm-12 hidden-xs-down hidden-sm-down">
-                <ol class="breadcrumb">
+                {% comment %} <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="#">Home</a></li>
                     <li class="breadcrumb-item"><a href="#">Blog</a></li>
                     <li class="breadcrumb-item active">Reviews</li>
-                </ol>
+                </ol> {% endcomment %}
+
+                <form action="{% url 'posts' %}" method="POST">
+                    {% csrf_token %}
+  
+                    Publish date minimum
+                    <input class="form-control" type="date" name="date_min">
+                    <br>
+                
+                    Publish date maximum
+                    <input  class="form-control" type="date" name="date_max">
+                    <br>
+                
+                    <input class="form-control" type="submit" value="Search" name="btnform2">
+                
+                </form>
+
             </div><!-- end col -->                    
         </div><!-- end row -->
     </div><!-- end container -->
   </div><!-- end page-title --> 
+
+
+
 
 
   <section class="section">
@@ -67,6 +85,37 @@
                                     <hr class="invis">
 
                             {% endfor %}
+
+
+                        {% elif filtered_posts  %} 
+
+                            <h1>Searched from date "{{date_min}}" to "{{date_max}}" </h1>
+
+                            {% for post in filtered_posts%}
+
+                                <div class="blog-box row">
+                                    <div class="col-md-4">
+                                        <div class="post-media">
+                                            <a href="{% url 'post_detail' post.slug%}" title="">
+                                                <img src="{% static 'my_blog/images/'|add:post.image_name %}" alt="" class="img-fluid">
+                                                <div class="hovereffect"></div>
+                                            </a>
+                                        </div><!-- end media -->
+                                    </div><!-- end col -->
+
+                                    <div class="blog-meta big-meta col-md-8">
+                                        <h4><a href="{% url 'post_detail' post.slug%}" title="">{{post.title}}</a></h4>
+                                        <p>{{post.summary}}</p>
+                                        <small>{{post.date}}</small>
+                                        <small>{{post.author}}</small>
+                                        <small><i class="fa fa-eye"></i> {{post.views}}</small>
+                                    </div><!-- end meta -->
+                                    </div><!-- end blog-box -->
+
+                                    <hr class="invis">
+
+                            {% endfor %}
+
 
                         {% else %}
 

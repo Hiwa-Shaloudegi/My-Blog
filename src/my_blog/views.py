@@ -29,9 +29,10 @@ def posts(request):
     latest_posts = posts[:5]
     all_most_viewd_posts = posts.order_by("-views")
     most_viewd_posts = all_most_viewd_posts[:5]
-    all_most_commented_posts = Post.objects.annotate(num_comment=Count('comments')).order_by('-num_comment') 
+    all_most_commented_posts = Post.objects.annotate(num_comment=Count('comments')).order_by('-num_comment')
 
-    if request.method == "POST":
+
+    if request.method == "POST" and 'btnform1' in request.POST:
         search = request.POST.get('search')
         searched_posts = Post.objects.filter(
             Q(title__contains=search) |
@@ -46,6 +47,22 @@ def posts(request):
             'latest_posts':latest_posts,
         })
 
+
+
+    if request.method == "POST" and 'btnform2' in request.POST: 
+        date_min = request.POST.get('date_min') 
+        date_max = request.POST.get('date_max')
+
+        filtered_posts = Post.objects.filter(date__gte=date_min)
+        filtered_posts = filtered_posts.filter(date__lte=date_max)
+
+        return render(request, 'my_blog/posts.html', context={
+            'filtered_posts':filtered_posts,
+            'date_min':date_min,
+            'date_max':date_max,
+            'posts':posts,
+            'latest_posts':latest_posts,
+        })
 
 
     return render(request, 'my_blog/posts.html', context={
