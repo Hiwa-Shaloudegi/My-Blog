@@ -1,6 +1,7 @@
 from django.db.models.aggregates import Count
 from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib import messages
+from django.db.models import Q
 from django.core.paginator import Paginator
 
 from .models import User, Post, Comment
@@ -26,10 +27,26 @@ def index(request):
 def posts(request):
     posts = Post.objects.all().order_by("-date")
     latest_posts = posts[:5]
-    most_viewd_posts = posts.order_by("-views")[:5]
     all_most_viewd_posts = posts.order_by("-views")
+    most_viewd_posts = all_most_viewd_posts[:5]
     all_most_commented_posts = Post.objects.annotate(num_comment=Count('comments')).order_by('-num_comment') 
-    # Post.objects.all().filter(title__contains='')
+
+    if request.method == "POST":
+        search = request.POST.get('search')
+        searched_posts = Post.objects.filter(
+            Q(title__contains=search) |
+            Q(summary__contains=search) |
+            Q(content__contains=search)
+            )
+
+        return render(request, 'my_blog/posts.html', context={
+            'searched_posts':searched_posts,
+            'search':search,
+            'posts':posts,
+            'latest_posts':latest_posts,
+        })
+
+
 
     return render(request, 'my_blog/posts.html', context={
         "posts":posts,

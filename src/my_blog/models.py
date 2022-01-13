@@ -20,8 +20,8 @@ class Post(models.Model):
 
 
 class Comment(models.Model):
-    parent = models.ForeignKey('Comment', on_delete=models.CASCADE, default=None) 
-    child = models.ForeignKey('Comment', on_delete=models.CASCADE, default=None, related_name='parents')
+    # parent = models.ForeignKey('Comment', on_delete=models.CASCADE, default=None) 
+    # child = models.ForeignKey('Comment', on_delete=models.CASCADE, default=None, related_name='parents')
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="comments")
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name="comments", null=True)
     content = models.TextField(null=True)   # content = Text Editor

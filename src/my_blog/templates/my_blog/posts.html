@@ -8,11 +8,17 @@
 
 
 
-    {% comment %} 
+     
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
-                <h2><i class="fa fa-star bg-orange"></i> Reviews <small class="hidden-xs-down hidden-sm-down">Nulla felis eros, varius sit amet volutpat non. </small></h2>
+
+                <form action="{% url 'posts' %}" method="POST">
+                    {% csrf_token %}
+                    <input type="text" placeholder="Search" name="search">
+                    <input type="submit" value="Submit">
+                </form>
+
             </div><!-- end col -->
             <div class="col-lg-4 col-md-4 col-sm-12 hidden-xs-down hidden-sm-down">
                 <ol class="breadcrumb">
@@ -22,7 +28,7 @@
                 </ol>
             </div><!-- end col -->                    
         </div><!-- end row -->
-    </div><!-- end container -->{% endcomment %}
+    </div><!-- end container -->
   </div><!-- end page-title --> 
 
 
@@ -33,30 +39,66 @@
                 <div class="page-wrapper">
                     <div class="blog-list clearfix">
 
-                      {% for post in posts %}
+                        {% if search %}
 
-                        <div class="blog-box row">
-                          <div class="col-md-4">
-                              <div class="post-media">
-                                  <a href="{% url 'post_detail' post.slug%}" title="">
-                                      <img src="{% static 'my_blog/images/'|add:post.image_name %}" alt="" class="img-fluid">
-                                      <div class="hovereffect"></div>
-                                  </a>
-                              </div><!-- end media -->
-                          </div><!-- end col -->
+                            <h1>You searched for "{{search}}"</h1>
 
-                          <div class="blog-meta big-meta col-md-8">
-                              <h4><a href="{% url 'post_detail' post.slug%}" title="">{{post.title}}</a></h4>
-                              <p>{{post.summary}}</p>
-                              <small>{{post.date}}</small>
-                              <small>{{post.author}}</small>
-                              <small><i class="fa fa-eye"></i> {{post.views}}</small>
-                            </div><!-- end meta -->
-                          </div><!-- end blog-box -->
+                            {% for post in searched_posts %}
+        
+                                <div class="blog-box row">
+                                    <div class="col-md-4">
+                                        <div class="post-media">
+                                            <a href="{% url 'post_detail' post.slug%}" title="">
+                                                <img src="{% static 'my_blog/images/'|add:post.image_name %}" alt="" class="img-fluid">
+                                                <div class="hovereffect"></div>
+                                            </a>
+                                        </div><!-- end media -->
+                                    </div><!-- end col -->
 
-                          <hr class="invis">
+                                    <div class="blog-meta big-meta col-md-8">
+                                        <h4><a href="{% url 'post_detail' post.slug%}" title="">{{post.title}}</a></h4>
+                                        <p>{{post.summary}}</p>
+                                        <small>{{post.date}}</small>
+                                        <small>{{post.author}}</small>
+                                        <small><i class="fa fa-eye"></i> {{post.views}}</small>
+                                    </div><!-- end meta -->
+                                    </div><!-- end blog-box -->
 
-                        {% endfor %}
+                                    <hr class="invis">
+
+                            {% endfor %}
+
+                        {% else %}
+
+                            <h1>Latest Posts:</h1>
+                        
+                            {% for post in posts %}
+    
+                                <div class="blog-box row">
+                                    <div class="col-md-4">
+                                        <div class="post-media">
+                                            <a href="{% url 'post_detail' post.slug%}" title="">
+                                                <img src="{% static 'my_blog/images/'|add:post.image_name %}" alt="" class="img-fluid">
+                                                <div class="hovereffect"></div>
+                                            </a>
+                                        </div><!-- end media -->
+                                    </div><!-- end col -->
+        
+                                    <div class="blog-meta big-meta col-md-8">
+                                        <h4><a href="{% url 'post_detail' post.slug%}" title="">{{post.title}}</a></h4>
+                                        <p>{{post.summary}}</p>
+                                        <small>{{post.date}}</small>
+                                        <small>{{post.author}}</small>
+                                        <small><i class="fa fa-eye"></i> {{post.views}}</small>
+                                    </div><!-- end meta -->
+                                    </div><!-- end blog-box -->
+        
+                                    <hr class="invis">
+    
+                            {% endfor %}
+                            
+                        {% endif %}
+
 
                         
                     </div><!-- end blog-list -->
