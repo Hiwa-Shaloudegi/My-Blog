@@ -3,6 +3,8 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from django.contrib.auth import authenticate 
 from django.utils.text import slugify
+from django.core.paginator import Paginator
+
 
 
 from my_blog.models import Comment, Post, User
@@ -67,10 +69,17 @@ def profile(request, username):
     if url_username[-1] == cuurent_user:          
         author = get_object_or_404(User, username=username)
         author_posts = author.posts.all().order_by('-date') 
+
+        # --Paginator-- #
+        paginator = Paginator(author_posts, 2) 
+        page = request.GET.get('page')   
+        paginator_posts = paginator.get_page(page)  
        
         return render(request, 'users/profile.html', context={
             'author':author,
             'author_posts':author_posts,
+            'paginator_posts':paginator_posts,
+
         })
 
     else:

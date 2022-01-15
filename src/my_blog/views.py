@@ -9,13 +9,19 @@ from .models import User, Post, Comment
     
 def index(request):
     posts = Post.objects.all().order_by("-date")
-    # paginator = Paginator(posts, 10)
+
+    # --Paginator-- #
+    paginator = Paginator(posts, 2) 
+    page = request.GET.get('page')   
+    paginator_posts = paginator.get_page(page)  
+
     latest_posts = posts[:5]
     most_viewd_posts = posts.order_by("-views")[:5]
     promoted_posts = Post.objects.all().filter(is_promote=True)[:3]   
     
     return render(request, 'my_blog/index.html', context={
         'posts':posts,
+        'paginator_posts':paginator_posts,
         'latest_posts':latest_posts,
         'most_viewd_posts':most_viewd_posts,
         'promoted_posts':promoted_posts,
@@ -26,6 +32,12 @@ def index(request):
 
 def posts(request):
     posts = Post.objects.all().order_by("-date")
+
+    # --Paginator-- #
+    paginator = Paginator(posts, 2) 
+    page = request.GET.get('page')   
+    paginator_posts = paginator.get_page(page)  
+
     latest_posts = posts[:5]
     all_most_viewd_posts = posts.order_by("-views")
     most_viewd_posts = all_most_viewd_posts[:5]
@@ -84,6 +96,7 @@ def posts(request):
     
     return render(request, 'my_blog/posts.html', context={
         "posts":posts,
+        'paginator_posts':paginator_posts,
         'latest_posts':latest_posts,
         'most_viewd_posts':most_viewd_posts,
         'all_most_viewd_posts':all_most_viewd_posts,
