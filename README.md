@@ -1,5 +1,6 @@
 # My-Blog
 
+
 This is a blog written in Django witch you can **register** then share your ideas with others and tell stories.
 
 # Features:
