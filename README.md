@@ -1,7 +1,7 @@
 # My-Blog
 
 
-This is a blog written in Django witch you can **register** then share your ideas with others and tell stories.
+This is a blog written in Django that you can **register** then share your ideas with others and tell stories.
 
 # Features:
 you can sign up and add your posts also delete or edit them. you're also able to leave comments below posts.
